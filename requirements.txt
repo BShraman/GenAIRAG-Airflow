@@ -1,0 +1,23 @@
+# Providers for various systems
+apache-airflow-providers-postgres
+
+# Additional Python packages for task execution (optional)
+psycopg2-binary
+python-dotenv
+requests
+pandas
+numpy
+unstructured
+
+#AI Packages
+langchain-community
+langchain
+chromadb
+sentence-transformers
+openai
+tiktoken
+langchain-chroma
+langchain_openai
+
+# Gradio
+gradio
