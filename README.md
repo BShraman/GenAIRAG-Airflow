@@ -2,8 +2,7 @@
 
  
 
-This project demonstrates the use of Apache Airflow for orchestrating Gen AI workflows, integrated with a Gradio application for user interaction. The project includes custom Docker images, Airflow DAGs, and a Gradio application. Orchestration is done via Airflow, and embedding and chart features are implemented using the OpenAI API.
-
+This project showcases the integration of Apache Airflow and Generative AI (Gen AI) workflows, offering a seamless orchestration solution coupled with an interactive Gradio application for user engagement. It includes custom Docker images, well-structured Airflow DAGs, and a responsive Gradio interface. By leveraging Apache Airflow for workflow orchestration and the OpenAI API for embedding and charting functionalities, the project demonstrates a powerful and modular framework for building and managing Gen AI-driven pipelines.
  
 
 ## Project Structure
