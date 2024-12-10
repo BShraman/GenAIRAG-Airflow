@@ -1,0 +1,192 @@
+[2024-12-10T01:14:45.338+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2024-12-10T01:14:45.365+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: doc_processing_embedding_dag.check_collection_task manual__2024-12-10T01:14:42.411321+00:00 [queued]>
+[2024-12-10T01:14:45.372+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: doc_processing_embedding_dag.check_collection_task manual__2024-12-10T01:14:42.411321+00:00 [queued]>
+[2024-12-10T01:14:45.373+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 1
+[2024-12-10T01:14:45.383+0000] {taskinstance.py:2889} INFO - Executing <Task(_BranchPythonDecoratedOperator): check_collection_task> on 2024-12-10 01:14:42.411321+00:00
+[2024-12-10T01:14:45.390+0000] {logging_mixin.py:190} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70 DeprecationWarning: This process (pid=196) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2024-12-10T01:14:45.392+0000] {standard_task_runner.py:72} INFO - Started process 197 to run task
+[2024-12-10T01:14:45.391+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'doc_processing_embedding_dag', 'check_collection_task', 'manual__2024-12-10T01:14:42.411321+00:00', '--job-id', '56', '--raw', '--subdir', 'DAGS_FOLDER/doc_processing_embedding_dag.py', '--cfg-path', '/tmp/tmp5cxebjxc']
+[2024-12-10T01:14:45.393+0000] {standard_task_runner.py:105} INFO - Job 56: Subtask check_collection_task
+[2024-12-10T01:14:45.410+0000] {logging_mixin.py:190} WARNING - /home/***/.local/lib/python3.12/site-packages/***/settings.py:209 DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+[2024-12-10T01:14:45.454+0000] {task_command.py:467} INFO - Running <TaskInstance: doc_processing_embedding_dag.check_collection_task manual__2024-12-10T01:14:42.411321+00:00 [running]> on host 3aab69148dfe
+[2024-12-10T01:14:45.681+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='doc_processing_embedding_dag' AIRFLOW_CTX_TASK_ID='check_collection_task' AIRFLOW_CTX_EXECUTION_DATE='2024-12-10T01:14:42.411321+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-12-10T01:14:42.411321+00:00'
+[2024-12-10T01:14:45.683+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2024-12-10T01:14:45.775+0000] {taskinstance.py:3311} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 767, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/decorators/base.py", line 266, in execute
+    return_value = super().execute(context)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 274, in execute
+    return self.do_branch(context, super().execute(context))
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/doc_processing_embedding_dag.py", line 57, in check_collection_task
+    chromadb_utils = ChromaDBChecker(collection_name=data['collection_name'])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/utils/chromaDBCheacker.py", line 19, in __init__
+    self.client = chromadb.PersistentClient(path=persist_directory)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/chromadb/__init__.py", line 153, in PersistentClient
+    return ClientCreator(tenant=tenant, database=database, settings=settings)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/chromadb/api/client.py", line 58, in __init__
+    super().__init__(settings=settings)
+  File "/home/airflow/.local/lib/python3.12/site-packages/chromadb/api/shared_system_client.py", line 19, in __init__
+    SharedSystemClient._create_system_if_not_exists(self._identifier, settings)
+  File "/home/airflow/.local/lib/python3.12/site-packages/chromadb/api/shared_system_client.py", line 32, in _create_system_if_not_exists
+    new_system.start()
+  File "/home/airflow/.local/lib/python3.12/site-packages/chromadb/config.py", line 444, in start
+    component.start()
+  File "/home/airflow/.local/lib/python3.12/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 150, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/chromadb/db/impl/sqlite.py", line 101, in start
+    with self.tx() as cur:
+         ^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/chromadb/db/impl/sqlite.py", line 144, in tx
+    return TxWrapper(self._conn_pool, stack=self._tx_stack)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/chromadb/db/impl/sqlite.py", line 34, in __init__
+    self._conn = conn_pool.connect()
+                 ^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/chromadb/db/impl/sqlite_pool.py", line 144, in connect
+    new_connection = Connection(
+                     ^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/chromadb/db/impl/sqlite_pool.py", line 22, in __init__
+    self._conn = sqlite3.connect(
+                 ^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: unable to open database file
+[2024-12-10T01:14:45.800+0000] {taskinstance.py:1225} INFO - Marking task as FAILED. dag_id=doc_processing_embedding_dag, task_id=check_collection_task, run_id=manual__2024-12-10T01:14:42.411321+00:00, execution_date=20241210T011442, start_date=20241210T011445, end_date=20241210T011445
+[2024-12-10T01:14:45.825+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2024-12-10T01:14:45.826+0000] {standard_task_runner.py:124} ERROR - Failed to execute job 56 for task check_collection_task (unable to open database file; 197)
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py", line 117, in _start_by_fork
+    ret = args.func(args, dag=self.dag)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/cli_config.py", line 49, in command
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/cli.py", line 116, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 483, in task_run
+    task_return_code = _run_task_by_selected_method(args, _dag, ti)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 256, in _run_task_by_selected_method
+    return _run_raw_task(args, ti)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 341, in _run_raw_task
+    return ti._run_raw_task(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/session.py", line 97, in wrapper
+    return func(*args, session=session, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3005, in _run_raw_task
+    return _run_raw_task(
+           ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 273, in _run_raw_task
+    TaskInstance._execute_task_with_callbacks(
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3159, in _execute_task_with_callbacks
+    result = self._execute_task(context, task_orig)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3183, in _execute_task
+    return _execute_task(self, context, task_orig)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 767, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/decorators/base.py", line 266, in execute
+    return_value = super().execute(context)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 274, in execute
+    return self.do_branch(context, super().execute(context))
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/doc_processing_embedding_dag.py", line 57, in check_collection_task
+    chromadb_utils = ChromaDBChecker(collection_name=data['collection_name'])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/utils/chromaDBCheacker.py", line 19, in __init__
+    self.client = chromadb.PersistentClient(path=persist_directory)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/chromadb/__init__.py", line 153, in PersistentClient
+    return ClientCreator(tenant=tenant, database=database, settings=settings)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/chromadb/api/client.py", line 58, in __init__
+    super().__init__(settings=settings)
+  File "/home/airflow/.local/lib/python3.12/site-packages/chromadb/api/shared_system_client.py", line 19, in __init__
+    SharedSystemClient._create_system_if_not_exists(self._identifier, settings)
+  File "/home/airflow/.local/lib/python3.12/site-packages/chromadb/api/shared_system_client.py", line 32, in _create_system_if_not_exists
+    new_system.start()
+  File "/home/airflow/.local/lib/python3.12/site-packages/chromadb/config.py", line 444, in start
+    component.start()
+  File "/home/airflow/.local/lib/python3.12/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 150, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/chromadb/db/impl/sqlite.py", line 101, in start
+    with self.tx() as cur:
+         ^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/chromadb/db/impl/sqlite.py", line 144, in tx
+    return TxWrapper(self._conn_pool, stack=self._tx_stack)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/chromadb/db/impl/sqlite.py", line 34, in __init__
+    self._conn = conn_pool.connect()
+                 ^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/chromadb/db/impl/sqlite_pool.py", line 144, in connect
+    new_connection = Connection(
+                     ^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/chromadb/db/impl/sqlite_pool.py", line 22, in __init__
+    self._conn = sqlite3.connect(
+                 ^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: unable to open database file
+[2024-12-10T01:14:45.879+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 1
+[2024-12-10T01:14:46.001+0000] {taskinstance.py:3895} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-12-10T01:14:46.006+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

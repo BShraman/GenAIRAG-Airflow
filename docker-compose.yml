@@ -1,5 +1,16 @@
 version: "3.8"
 
+x-shared-settings: &shared-settings
+  environment:
+    - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+  volumes:
+    - ./dags:/opt/airflow/dags
+    - ./logs:/opt/airflow/logs
+    - ./chromadb:/opt/chromadb
+    - ./include/data:/opt/data/
+  networks:
+    - airflow
+
 services:
   postgres:
     image: ${POSTGRES_IMAGE}
@@ -12,64 +23,39 @@ services:
       - ./postgres_data:/var/lib/postgresql/data
     networks:
       - airflow
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
 
   airflow-webserver:
     image: ${AIRFLOW_IMAGE}
     container_name: airflow_webserver
-    environment:
-      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
-      - AIRFLOW_BASE_URL=http://localhost:8080
+    <<: *shared-settings
     env_file:
-       - .env
+      - .env
     depends_on:
       - postgres
     ports:
-      - "8080:8080"
-    networks:
-      - airflow
-    volumes:
-      - ./dags:/opt/airflow/dags
-      - ./logs:/opt/airflow/logs
-      - ./chromadb:/opt/chromadb
-      - ./include/data:/opt/data/
-    entrypoint: ["/opt/airflow/entrypoint.sh", "webserver"]
+      - "${AIRFLOW_WEBSERVER_PORT}:${AIRFLOW_WEBSERVER_PORT}"
+    entrypoint: ["${AIRFLOW_HOME}/entrypoint.sh", "webserver"]
 
   airflow-scheduler:
     image: ${AIRFLOW_IMAGE}
     container_name: airflow_scheduler
-    environment:
-      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
-      - AIRFLOW_BASE_URL=http://localhost:8080
+    <<: *shared-settings
     env_file:
-       - .env
+      - .env
     depends_on:
       - postgres
-    networks:
-      - airflow
-    volumes:
-      - ./dags:/opt/airflow/dags
-      - ./logs:/opt/airflow/logs
-      - ./chromadb:/opt/chromadb
-      - ./include/data:/opt/data/
-    entrypoint: ["/opt/airflow/entrypoint.sh", "scheduler"]
+    entrypoint: ["${AIRFLOW_HOME}/entrypoint.sh", "scheduler"]
 
   airflow-init:
     image: ${AIRFLOW_IMAGE}
     container_name: airflow_init
-    environment:
-      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
-      - AIRFLOW_BASE_URL=http://localhost:8080
+    <<: *shared-settings
     env_file:
-       - .env
+      - .env
     depends_on:
       - postgres
-    networks:
-      - airflow
-    volumes:
-      - ./dags:/opt/airflow/dags
-      - ./logs:/opt/airflow/logs
-      - ./chromadb:/opt/chromadb
-      - ./include/data:/opt/data/
     command: ["airflow", "db", "init"]
 
   gradio:
@@ -78,22 +64,16 @@ services:
     environment:
       - KEY=VALUE
     env_file:
-       - .env
+      - .env
     ports:
-      - "7860:7860"
+      - "${GRADIO_WEB_PORT}:${GRADIO_WEB_PORT}"
     volumes:
-      - ./chromadb:/opt/chromadb
-      - ./include/gradio:/opt/gradio
-      - ./include/data:/opt/data/
-    entrypoint: ["python3", "/opt/gradio/app.py"]
-    
+      - ./chromadb:${persist_directory}
+      - ./include/gradio:${GRADIO_HOME}
+      - ./include/data:${INLINE_DATA_VOLUME}
+    entrypoint: ["python3", "${GRADIO_HOME}/app.py"]
     networks:
       - airflow
-
-# volumes:
-#   postgres_data:
-#   airflow_dags:
-#   airflow_logs:
 
 networks:
   airflow:

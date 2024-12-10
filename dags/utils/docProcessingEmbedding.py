@@ -1,8 +1,7 @@
-import re, requests
+import re, requests, os
 from langchain.schema import Document
 from langchain_community.document_loaders import BSHTMLLoader
 from langchain.embeddings import OpenAIEmbeddings
-from datetime import timedelta
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import tempfile
 from langchain.vectorstores import Chroma
@@ -99,7 +98,7 @@ class DocumentProcessor:
         
         print("========= Embeddings and Vector Store =============")
         self.splits = splits
-        self.persist_directory = persist_directory
+        self.persist_directory = os.getenv("PERSIST_DIRECTORY")
         self.collection_name = collection_name
         
         embeddings = OpenAIEmbeddings()

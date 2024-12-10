@@ -1,0 +1,143 @@
+from airflow.operators.empty import EmptyOperator
+from airflow.decorators import dag, task
+from datetime import timedelta
+from airflow.utils.dates import days_ago
+import sys, os 
+from airflow.datasets import Dataset
+import json
+
+# Add the 'utils' folder to the Python path
+sys.path.append(os.path.join(os.path.dirname(__file__), 'utils'))
+from doc_processing_embedding import *
+from chroma_db_cheacker import *
+
+folder_dataset = Dataset("/opt/data/")
+persist_directory = "/opt/chromadb"
+CREATE_CLASS_TASK_ID = "create_class"
+CLASS_ALREADY_EXISTS_TASK_ID = "class_already_exists"
+
+@dag(
+        schedule=[folder_dataset],
+        start_date=days_ago(1),
+        catchup=False,
+        default_args={'owner': 'airflow', 'retries': 0, 'retry_delay': timedelta(minutes=5)},
+        description="Fetch, process, and store document metadata and embeddings"
+)
+
+def doc_processing_embedding_dag():
+
+    # Start task
+    @task()
+    def start_task():
+        try:
+            # Find the JSON file in the dataset folder
+            folder_path = folder_dataset
+            json_files = [f for f in os.listdir(folder_path) if f.endswith('.json')]
+            
+            if not json_files:
+                print("No JSON file found in the dataset folder")
+                return None
+            
+            # Use the first JSON file found
+            file_path = os.path.join(folder_path, json_files[0])
+            
+            # Read and parse the JSON file
+            with open(file_path, 'r') as file:
+                data = json.load(file)
+            
+            # Extract URL and Collection Name
+            url = data.get('url')
+            collection_name = data.get('collection_name')
+            
+            return {
+                "url": url,
+                "collection_name": collection_name
+            }
+        
+        except Exception as e:
+            print(f"Error reading JSON file: {str(e)}")
+            return None
+
+    @task.branch()
+    def check_collection_task(collection_name, persist_directory ,create_class_task_id ,class_already_exists_task_id):
+        """
+        Task wrapper for the ChromaDBUtils class method check_collection_exists.
+        """
+        chromadb_utils = ChromaDBChecker(collection_name, persist_directory)
+        return chromadb_utils.check_collection_exists(create_class_task_id,class_already_exists_task_id )
+
+    @task()
+    def create_class():
+        """Task to handle creating a class in ChromaDB."""
+        print("Creating a new class in ChromaDB...")
+
+    @task()
+    def class_already_exists():
+        """Task to handle logic for when the class already exists."""
+        print("Class already exists in ChromaDB.")
+        
+    start_task = start_task()
+    branch_task = check_collection_task(start_task)
+    end_task = EmptyOperator(task_id="end_task")
+
+    branch_task = check_collection_task(start_task["collection_name"], 
+                                        persist_directory,
+                                        CREATE_CLASS_TASK_ID,
+                                        CLASS_ALREADY_EXISTS_TASK_ID)
+    # process_task_instance = process_embed_store_task()
+    create_task = create_class()
+    exists_task = class_already_exists()
+
+    start_task >> branch_task >> [create_task, exists_task] #>> process_task_instance >> end_task
+
+
+dag = doc_processing_embedding_dag()
+
+
+
+
+# ============
+import os
+import chromadb
+
+def get_collection_names(persist_directory="/opt/chromadb"):
+    """
+    Retrieve available collection names from a ChromaDB persistent directory.
+    
+    Args:
+        persist_directory (str): Path to the directory where ChromaDB data is stored.
+
+    Returns:
+        list: A list of collection names.
+    """
+    try:
+        # Ensure the persistence directory exists
+        if not os.path.exists(persist_directory):
+            raise FileNotFoundError(f"Persistence directory '{persist_directory}' does not exist.")
+
+        # Initialize ChromaDB client with the new method
+        client = chromadb.PersistentClient(path=persist_directory)
+        
+        # Fetch collections
+        collections = client.list_collections()
+        
+        if not collections:
+            print(f"No collections found in directory: {persist_directory}")
+            return []
+        
+        # Extract and return collection names
+        return [collection.name for collection in collections]
+    
+    except FileNotFoundError as e:
+        print(f"File error: {str(e)}")
+        return []
+    except Exception as e:
+        print(f"Error retrieving collections: {str(e)}")
+        return []
+
+# Example usage
+print(get_collection_names())
+
+
+
+

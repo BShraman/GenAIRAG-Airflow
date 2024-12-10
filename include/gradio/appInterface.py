@@ -17,9 +17,7 @@ class AppInterface:
             chatbot (DataChatBot): An instance of the DataChatBot class to interact with.
         """
         self.chatbot = chatbot
-        self.collection_name_default = "airflow_config_20241127"
-        self.persist_directory = os.getenv("INLINE_DATA_VOLUME")
-        self.persist_directory = os.getenv("persist_directory")
+        self.persist_directory = os.getenv("PERSIST_DIRECTORY")
         self.collection_list = self.get_collection_list()
         self.collection_name_default = self.collection_list[0] if self.collection_list else None
         self.base_url = os.getenv("AIRFLOW_WEBSERVER_URL")
@@ -28,6 +26,7 @@ class AppInterface:
         self.password = os.getenv("AIRFLOW_PASSWORD")
         self.endpoint = f"{self.base_url}/api/v1/dags/{self.dag_id}/dagRuns"
         self.headers = {"Content-Type": "application/json"}
+        self.file_path=os.getenv("INLINE_DATA_VOLUME")
 
     def trigger_airflow_dag(self,conf=None):
         """
@@ -73,6 +72,7 @@ class AppInterface:
         Returns:
             str: Confirmation message.
         """
+        file_path =f"{self.file_path}/data.json"
         try:
             # Delete the file if it exists
             if os.path.exists(file_path):

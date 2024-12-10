@@ -1,6 +1,41 @@
+# Airflow Configuration
 AIRFLOW_IMAGE=airflow:2.10.3
 AIRFLOW__WEBSERVER__SECRET_KEY=asdfaksjdfhkjhkj
 AIRFLOW__CORE__EXECUTOR=LocalExecutor
 AIRFLOW__CORE__LOAD_EXAMPLES=False
 AIRFLOW__WEBSERVER__WORKERS=4
+AIRFLOW__CORE__ALLOWED_DESERIALIZATION_CLASSES=langchain_core.documents.base.Document
+AIRFLOW_HOME=/opt/airflow
+AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+AIRFLOW__API__AUTH_BACKENDS=airflow.api.auth.backend.basic_auth
+AIRFLOW__API__ENABLE_EXPERIMENTAL_API=True
+AIRFLOW_DAG_ID_FOR_RESTAPI=doc_processing_embedding_dag
+AIRFLOW_WEBSERVER_URL=http://airflow_webserver:8080
+AIRFLOW_WEBSERVER_PORT=8080
+AIRFLOW_USERNAME=admin
+AIRFLOW_PASSWORD=admin
+AIRFLOW__CORE__DAGS_FOLDER=/opt/airflow/dags
+AIRFLOW__LOGGING__BASE_LOG_FOLDER=/opt/airflow/logs
 
+# PostgreSQL Configuration
+POSTGRES_IMAGE=postgres:latest
+POSTGRES_USER=airflow
+POSTGRES_PASSWORD=airflow
+POSTGRES_DB=airflow
+POSTGRES_PORT=5432
+
+# OpenAI API Configuration
+OPENAI_API_KEY=UPDATE_KEY
+RESPONSE_MODEL=gpt-3.5-turbo
+EMBEDDING_MODEL=text-embedding-ada-002
+
+# Chroma DB Configuration
+ANONYMIZED_TELEMETRY=False
+PERSIST_DIRECTORY=/opt/chromadb
+
+# Volume Configuration
+INLINE_DATA_VOLUME=/opt/data/
+
+# Gradio Configuration
+GRADIO_HOME=/opt/gradio
+GRADIO_WEB_PORT=7860
