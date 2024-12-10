@@ -1,8 +1,8 @@
-# Gen AI with Airflow and Gradio
+/Users/shraman/Projects/genAIWithAirflow# Gen AI  RAG Using Airflow and Gradio
 
  
 
-This project showcases the integration of Apache Airflow and Generative AI (Gen AI) workflows, offering a seamless orchestration solution coupled with an interactive Gradio application for user engagement. It includes custom Docker images, well-structured Airflow DAGs, and a responsive Gradio interface. By leveraging Apache Airflow for workflow orchestration and the OpenAI API for embedding and chat functionalities, the project demonstrates a powerful and modular framework for building and managing Gen AI-driven pipelines.
+This project is a RAG-based (Retrieval-Augmented Generation) chatbot that allows users to upload a URL, which is then parsed and stored in a vector database. The stored collection is utilized to query user questions, with data retrieved dynamically from the vector database to provide relevant answers. The system leverages Apache Airflow for workflow orchestration, Gradio for the interactive user interface, and the OpenAI API for embedding and chat functionalities. The entire process is orchestrated efficiently using Docker containers and custom-built Airflow DAGs, offering a modular and scalable solution.
  
 
 ## Project Structure
@@ -18,8 +18,6 @@ This project showcases the integration of Apache Airflow and Generative AI (Gen 
 - `Dockerfile`: Custom Dockerfile for building the Airflow image.
 
 - `docker-compose.yml`: Docker Compose file for setting up the Airflow, PostgreSQL, and Gradio services.
-
-- `README.md`: This file.
 
  
 
@@ -160,8 +158,6 @@ docker logs postgres
 docker logs gradio_app
 
 ```
-
- 
 
 ## Contributing
 
