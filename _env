@@ -39,3 +39,4 @@ INLINE_DATA_VOLUME=/opt/data/
 # Gradio Configuration
 GRADIO_HOME=/opt/gradio
 GRADIO_WEB_PORT=7860
+
