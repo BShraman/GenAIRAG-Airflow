@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 if __name__ == "__main__":
-    persist_dir_default = "/opt/chromadb"
+    persist_dir_default = os.getenv("PERSIST_DIRECTORY")
     chatbot = DataChatBot(persist_directory=persist_dir_default)
     gradio_interface = AppInterface(chatbot=chatbot)
 

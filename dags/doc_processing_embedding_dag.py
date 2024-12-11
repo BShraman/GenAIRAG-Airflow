@@ -14,8 +14,6 @@ from chromaDBCheacker import ChromaDBChecker
 
 # Constants
 dataset_folder = os.getenv("INLINE_DATA_VOLUME")
-CREATE_CLASS_TASK_ID = "create_class"
-CLASS_ALREADY_EXISTS_TASK_ID = "class_already_exists"
 
 @dag(
     schedule=None,
@@ -55,7 +53,7 @@ def doc_processing_embedding_dag():
         Checks if the ChromaDB collection exists and branches accordingly.
         """
         chromadb_utils = ChromaDBChecker(collection_name=data['collection_name'])
-        return chromadb_utils.check_collection_exists(CREATE_CLASS_TASK_ID, CLASS_ALREADY_EXISTS_TASK_ID)
+        return chromadb_utils.check_collection_exists()
 
     @task()
     def create_class():

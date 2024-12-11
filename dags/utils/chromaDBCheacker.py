@@ -1,13 +1,14 @@
 from chromadb import Client
 import chromadb
 from chromadb.config import Settings
+import os
 
 class ChromaDBChecker:
     """
     A class to check if a specific collection exists in ChromaDB.
     """
 
-    def __init__(self, collection_name = "", persist_directory="/opt/chromadb"):
+    def __init__(self, collection_name = "", persist_directory=""):
         """
         Initialize the ChromaDBChecker with the directory for ChromaDB persistence.
 
@@ -15,12 +16,13 @@ class ChromaDBChecker:
             persist_directory (str): Path to the directory where ChromaDB collections are stored.
         """
         # Initialize the client
-
-        self.client = chromadb.PersistentClient(path=persist_directory)
+        self.client = chromadb.PersistentClient(path=os.getenv("PERSIST_DIRECTORY"))
         self.collection_name = collection_name
+        self.create_class_task_id = "create_class"
+        self.class_already_exists_task_id = "class_already_exists"   
         
 
-    def check_collection_exists(self, create_class_task_id: str, class_already_exists_task_id: str):
+    def check_collection_exists(self):
         """
         Checks if a collection (class) exists in ChromaDB.
 
@@ -33,8 +35,8 @@ class ChromaDBChecker:
 
         try:
             collection = self.client.get_collection(name=self.collection_name)
-            return class_already_exists_task_id
+            return self.class_already_exists_task_id
         except Exception:
             pass
-        return create_class_task_id
+        return self.create_class_task_id 
         
