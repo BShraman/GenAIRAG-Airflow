@@ -4,10 +4,10 @@ x-shared-settings: &shared-settings
   environment:
     - AIRFLOW__CORE__EXECUTOR=LocalExecutor
   volumes:
-    - ./dags:/opt/airflow/dags
-    - ./logs:/opt/airflow/logs
-    - ./chromadb:/opt/chromadb
-    - ./include/data:/opt/data/
+    - ./dags:${AIRFLOW__CORE__DAGS_FOLDER}
+    - ./logs:${AIRFLOW__LOGGING__BASE_LOG_FOLDER}
+    - ./chromadb:${PERSIST_DIRECTORY}
+    - ./include/data:${INLINE_DATA_VOLUME}
   networks:
     - airflow
 

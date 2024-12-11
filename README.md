@@ -67,7 +67,10 @@ docker build -t custom-airflow:latest .
 
  
 
-Create a `.env` file in the root directory and add the required environment variables:
+Create a `.env` file in the root directory and add/update the required environment variables:
+```
+cp _env .env
+```
 
  
 
