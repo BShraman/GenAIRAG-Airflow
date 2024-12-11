@@ -183,7 +183,7 @@ class AppInterface:
                     interactive=True),
             ],
             outputs=gr.Textbox(label="Chatbot Response:"),
-            title="ChromaDB Chatbot",
+            title="Chatbot",
             description="Ask questions about a specific dataset stored in ChromaDB.",
         )
 
