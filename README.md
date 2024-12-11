@@ -39,9 +39,9 @@ This project is a RAG-based (Retrieval-Augmented Generation) chatbot that allows
 
 ```sh
 
-git clone https://github.com/BShraman/genAIUsingAirflow.git
+git clone https://github.com/BShraman/GenAIRAG-Airflow.git
 
-cd genAIUsingAirflow
+cd GenAIRAG-Airflow
 
 ```
 
