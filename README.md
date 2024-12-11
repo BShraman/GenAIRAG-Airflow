@@ -1,6 +1,6 @@
 ## Gen AI  RAG Using Airflow and Gradio
 
-This project is a RAG-based (Retrieval-Augmented Generation) chatbot that allows users to upload a URL, which is then parsed and stored in a vector database. The stored collection is utilized to query user questions, with data retrieved dynamically from the vector database to provide relevant answers. The system leverages Apache Airflow for workflow orchestration, Gradio for the interactive user interface, and the OpenAI API for embedding and chat functionalities. The entire process is orchestrated efficiently using Docker containers and custom-built Airflow DAGs, offering a modular and scalable solution.
+This project is a RAG-based (Retrieval-Augmented Generation) chatbot that allows users to upload a URL, which is then parsed and stored in a vector database. The stored collection is used to query user questions, dynamically retrieving relevant answers from the vector database. The system utilizes Apache Airflow for workflow orchestration, Gradio for an interactive user interface, and the OpenAI API for embedding and chat functionalities. Docker containers efficiently orchestrate the entire process, providing a scalable and modular solution. The application is fully containerized, ensuring portability and ease of deployment across different environments.
  
 
 ## Project Structure
