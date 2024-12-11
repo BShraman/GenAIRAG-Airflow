@@ -167,7 +167,7 @@ class AppInterface:
             fn=self.save_url_to_file,
             inputs=gr.Textbox(label="Enter URL:", placeholder="Type the URL here..."),
             outputs=gr.Textbox(label="Status Message"),
-            title="Save URL",
+            title="Trigger Airflow Dag",
             description="Enter a URL to save it to a local file.",
         )
 
@@ -188,7 +188,7 @@ class AppInterface:
         )
 
         # Combine interfaces into a single app
-        gr.TabbedInterface([url_interface, chatbot_interface], ["Save URL", "Chatbot"]).launch(
+        gr.TabbedInterface([url_interface, chatbot_interface], ["Processing", "Chatbot"]).launch(
             server_name="0.0.0.0", server_port=7860
         )
 

@@ -138,6 +138,23 @@ The `dags/` directory contains Airflow DAGs and related utilities for document s
 The `include/gradio` directory contains the Gradio application.
 
  
+## UI Screenshots
+
+### Airflow Web UI
+
+The Airflow Web UI allows you to manage and monitor the workflows efficiently. Below is a screenshot of the Airflow dashboard where you can view and trigger your DAGs.
+
+![Airflow UI](doc/img/airflow-dag.png)
+
+### Gradio Chatbot UI
+
+The Gradio interface is used for interacting with the RAG-based chatbot. Users can upload URLs, which will be embedded and store in vectordb. The chatbot will respond to queries based on the Collection store in the vector database. Below is a screenshot of the Gradio UI where users can input their questions.
+
+![Gradio Processing URL ](doc/img/gradio-processing.png)
+![Gradio Collection List URL ](doc/img/gradio-collection-list.png)
+![Gradio Q&A  URL ](doc/img/gradio-search.png)
+
+
 
 ## Troubleshooting
 
