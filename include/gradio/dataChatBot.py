@@ -12,9 +12,6 @@ logger = logging.getLogger(__name__)
 
 class DataChatBot:
     """DataChatBot class to handle the initialization, data processing, and querying with ChromaDB."""
-
-    EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL")
-    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
     
     def __init__(self, persist_directory: str):
         """
@@ -23,6 +20,9 @@ class DataChatBot:
         Args:
             persist_directory (str): Path to ChromaDB persistence directory.
         """
+        self.EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL")
+        self.OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+        
         if not self.OPENAI_API_KEY:
             logger.error("OpenAI API Key is not set.")
             raise ValueError("OpenAI API Key is required.")
