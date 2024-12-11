@@ -68,7 +68,7 @@ services:
     ports:
       - "${GRADIO_WEB_PORT}:${GRADIO_WEB_PORT}"
     volumes:
-      - ./chromadb:${persist_directory}
+      - ./chromadb:${PERSIST_DIRECTORY}
       - ./include/gradio:${GRADIO_HOME}
       - ./include/data:${INLINE_DATA_VOLUME}
     entrypoint: ["python3", "${GRADIO_HOME}/app.py"]
@@ -78,5 +78,3 @@ services:
 networks:
   airflow:
     driver: bridge
-
-
