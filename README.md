@@ -71,7 +71,7 @@ AIRFLOW_IMAGE=custom-airflow:latest
 
 ```
 
- ### 3. Build the Custom Docker Image
+### 3. Build the Custom Docker Image
 
  
 
