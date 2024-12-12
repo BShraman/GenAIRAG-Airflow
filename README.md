@@ -46,24 +46,7 @@ cd GenAIRAG-Airflow
 ```
 
  
-
-### 2. Build the Custom Docker Image
-
- 
-
-Build the custom Docker image for Airflow:
-
- 
-
-```sh
-
-docker build -t custom-airflow:latest .
-
-```
-
- 
-
-### 3. Configure Environment Variables
+### 2. Configure Environment Variables
 
  
 
@@ -88,7 +71,19 @@ AIRFLOW_IMAGE=custom-airflow:latest
 
 ```
 
+ ### 3. Build the Custom Docker Image
+
  
+
+Build the custom Docker image for Airflow:
+
+ 
+
+```sh
+
+docker build -t custom-airflow:latest .
+
+```
 
 ### 4. Start the Services
 
