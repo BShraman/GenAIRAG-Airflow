@@ -170,9 +170,3 @@ docker logs postgres
 docker logs gradio_app
 
 ```
-
-## Contributing
-
- 
-
-Contributions are welcome! Please open an issue or submit a pull request.
